@@ -1,0 +1,30 @@
+[root@newforeman yum.repos.d]# foreman-installer --scenario katello --foreman-admin-username admin --foreman-admin-password support
+Installing             Done                                               [100%] [....................................................................]
+  Success!
+  * Katello is running at https://newforeman.example.com
+      Initial credentials are admin / support
+  * To install an additional Foreman proxy on separate machine continue by running:
+
+      foreman-proxy-certs-generate --foreman-proxy-fqdn "$FOREMAN_PROXY" --certs-tar "~/$FOREMAN_PROXY-certs.tar"
+
+  The full log is at /var/log/foreman-installer/katello.log
+
+
+HISTORY
+    1   yum -y install http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    2   yum -y install https://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm
+    3   yum -y install https://yum.theforeman.org/releases/1.14/el7/x86_64/foreman-release.rpm
+    4   yum -y install http://fedorapeople.org/groups/katello/releases/yum/3.3/katello/el7/x86_64/katello-repos-latest.rpm
+    5   yum -y install foreman-release-scl
+    9  systemctl enable firewalld
+   10  systemctl restart firewalld
+   14  firewall-cmd --permanent --add-service={RH-Satellite-6,ftp,tftp}
+   15  firewall-cmd --permanent --add-port="80/tcp" --add-port="443/tcp" --add-port="5646/tcp" --add-port="5647/tcp" --add-port="5671/tcp" --add-port="5672/tcp"  --add-port="8140/tcp" --add-port="9090/tcp" --add-port="53/udp" --add-port="53/tcp"  --add-port="67/udp" --add-port="68/udp" --add-port="69/udp" --add-port="8080/tcp" --add-port="8000/tcp"
+   16  firewall-cmd --reload
+   18  cd /etc/yum.repos.d/
+   21  vi puppetlabs-pc1.repo 
+   22  yum -y update
+   23  yum -y install foreman-installer
+   24   yum -y install katello
+   26  foreman-installer --scenario katello --foreman-admin-username admin --foreman-admin-password support
+

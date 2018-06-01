@@ -1,0 +1,10 @@
+{
+  "nodes": {
+    "newforeman.example.com": {
+      ":ip": "192.168.35.5",
+      "ports": [],
+      ":memory": 8192,
+      ":box": "geerlingguy/centos7"
+    }
+  }
+}
